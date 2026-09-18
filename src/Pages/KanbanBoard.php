@@ -75,7 +75,7 @@ class KanbanBoard extends Page
             : $toStatus;
 
         if (! $this->canTransition($fromStatus, $targetStatus)) {
-            $this->rejectMove($recordId);
+            $this->rejectMove($recordId, $fromStatus, $targetStatus);
 
             return;
         }

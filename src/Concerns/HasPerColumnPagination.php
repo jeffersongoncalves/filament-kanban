@@ -26,8 +26,16 @@ trait HasPerColumnPagination
     {
         $query = $this->getEloquentQuery()->where(static::$recordStatusAttribute, $statusId);
 
+        // persistOrder() (HasBatchedOrdering) always writes static::$orderColumn,
+        // so the read side must always order by it too — otherwise the DB can
+        // return rows in a different order than what was just dragged, and the
+        // board visibly jumps after every successful move. Prefer the host
+        // model's own scopeOrdered() when it exists (e.g. a custom order
+        // column via spatie/eloquent-sortable), else fall back to ours.
         if (method_exists(static::$model, 'scopeOrdered')) {
             $query->ordered();
+        } else {
+            $query->orderBy(static::$orderColumn);
         }
 
         return $query->limit($this->perPage() * $this->pageFor($statusId))->get();

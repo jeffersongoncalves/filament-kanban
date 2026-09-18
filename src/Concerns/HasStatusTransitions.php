@@ -17,8 +17,18 @@ trait HasStatusTransitions
         return $fromStatus->canTransitionTo($toStatus);
     }
 
-    protected function rejectMove(int|string $recordId): void
+    // Carries from/to status so a listener can show *why* the move was
+    // rejected. No manual DOM snapback needed: the rejected action still
+    // triggers a normal Livewire re-render, and since nothing was persisted,
+    // the re-fetched, wire:keyed collection puts the card back in its real
+    // column on its own.
+    protected function rejectMove(int|string $recordId, mixed $fromStatus, mixed $toStatus): void
     {
-        $this->dispatch('kanban-move-rejected', recordId: $recordId);
+        $this->dispatch(
+            'kanban-move-rejected',
+            recordId: $recordId,
+            fromStatus: $fromStatus instanceof \BackedEnum ? $fromStatus->value : $fromStatus,
+            toStatus: $toStatus instanceof \BackedEnum ? $toStatus->value : $toStatus,
+        );
     }
 }

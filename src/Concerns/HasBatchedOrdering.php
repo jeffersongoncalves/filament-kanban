@@ -25,6 +25,10 @@ trait HasBatchedOrdering
             ])
             ->all();
 
+        // Deliberately Eloquent's upsert(), not a hand-rolled CASE WHEN string:
+        // the query builder's grammar already quotes/prefixes identifiers and
+        // binds every id as a parameter per driver (MySQL ON DUPLICATE KEY,
+        // Postgres/SQLite ON CONFLICT). Don't replace this with raw SQL.
         $model::query()->upsert($rows, [$keyName], [$orderColumn]);
     }
 }
