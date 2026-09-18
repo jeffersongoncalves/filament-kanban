@@ -1,3 +1,9 @@
+<div class="filament-hidden">
+
+![Filament Kanban](https://raw.githubusercontent.com/jeffersongoncalves/filament-kanban/1.x/art/jeffersongoncalves-filament-kanban.png)
+
+</div>
+
 # Filament Kanban
 
 Add a drag-and-drop kanban board to a Filament panel, backed by your own Eloquent model — bounded per-column queries, batched reorder writes, and server-side status-transition validation by design (see [ADR-0001](docs/adr/0001-board-rendering-performance.md)).
