@@ -1,3 +1,9 @@
+<div class="filament-hidden">
+
+![Filament Kanban](https://raw.githubusercontent.com/jeffersongoncalves/filament-kanban/3.x/art/jeffersongoncalves-filament-kanban.png)
+
+</div>
+
 # Filament Kanban
 
 Add a drag-and-drop kanban board to a Filament panel, backed by your own Eloquent model — bounded per-column queries, batched reorder writes, and server-side status-transition validation by design (see [ADR-0001](docs/adr/0001-board-rendering-performance.md)).
@@ -8,10 +14,18 @@ Add a drag-and-drop kanban board to a Filament panel, backed by your own Eloquen
 |----------|------|----------|
 | ^5.0     | ^8.2 | ^11.28   |
 
+## Compatibility
+
+| Plugin Version | Filament Version |
+|-----------------|------------------|
+| [1.x](https://github.com/jeffersongoncalves/filament-kanban/tree/1.x) | 3.x |
+| [2.x](https://github.com/jeffersongoncalves/filament-kanban/tree/2.x) | 4.x |
+| [3.x](https://github.com/jeffersongoncalves/filament-kanban/tree/3.x) | 5.x |
+
 ## Installation
 
 ```bash
-composer require jeffersongoncalves/filament-kanban
+composer require jeffersongoncalves/filament-kanban:"^3.0"
 ```
 
 ## Usage
