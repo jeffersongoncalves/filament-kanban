@@ -14,12 +14,6 @@
 
 Add a drag-and-drop kanban board to a Filament panel, backed by your own Eloquent model — bounded per-column queries, batched reorder writes, and server-side status-transition validation by design (see [ADR-0001](docs/adr/0001-board-rendering-performance.md)).
 
-## Requirements
-
-| Filament | PHP  | Laravel  |
-|----------|------|----------|
-| ^4.0     | ^8.2 | ^11.0    |
-
 ## Compatibility
 
 | Plugin Version | Filament Version |
