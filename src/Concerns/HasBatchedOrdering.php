@@ -8,27 +8,50 @@ namespace JeffersonGoncalves\Filament\Kanban\Concerns;
  */
 trait HasBatchedOrdering
 {
+    /**
+     * A single UPDATE ... CASE WHEN, not Eloquent's upsert(). upsert() always
+     * attempts an INSERT first (falling back to UPDATE on conflict), and that
+     * INSERT is validated against every NOT NULL column on the table — not
+     * just the two we're touching — so it breaks the moment the model has
+     * any other required column, on every driver, even for rows that already
+     * exist. A plain UPDATE never attempts to insert, so it doesn't hit that.
+     *
+     * Identifiers are quoted via the connection's own grammar (backticks on
+     * MySQL, double quotes on Postgres/SQLite), and every id/position is a
+     * bound parameter — this is standard CASE WHEN SQL, not driver-specific.
+     */
     protected function persistOrder(array $orderedIds, string $orderColumn = 'order_column'): void
     {
+        $orderedIds = array_values($orderedIds);
+
         if ($orderedIds === []) {
             return;
         }
 
         $model = new (static::$model);
-        $keyName = $model->getKeyName();
+        $connection = $model->getConnection();
+        $grammar = $connection->getQueryGrammar();
 
-        $rows = collect($orderedIds)
-            ->values()
-            ->map(fn ($id, $index) => [
-                $keyName => $id,
-                $orderColumn => $index + 1,
-            ])
-            ->all();
+        $wrappedTable = $grammar->wrapTable($model->getTable());
+        $wrappedKey = $grammar->wrap($model->getKeyName());
+        $wrappedColumn = $grammar->wrap($orderColumn);
 
-        // Deliberately Eloquent's upsert(), not a hand-rolled CASE WHEN string:
-        // the query builder's grammar already quotes/prefixes identifiers and
-        // binds every id as a parameter per driver (MySQL ON DUPLICATE KEY,
-        // Postgres/SQLite ON CONFLICT). Don't replace this with raw SQL.
-        $model::query()->upsert($rows, [$keyName], [$orderColumn]);
+        $bindings = [];
+        $whenClauses = [];
+
+        foreach ($orderedIds as $index => $id) {
+            $whenClauses[] = 'when ? then ?';
+            $bindings[] = $id;
+            $bindings[] = $index + 1;
+        }
+
+        $bindings = [...$bindings, ...$orderedIds];
+        $placeholders = implode(',', array_fill(0, count($orderedIds), '?'));
+
+        $sql = "update {$wrappedTable} set {$wrappedColumn} = case {$wrappedKey} "
+            .implode(' ', $whenClauses)
+            ." end where {$wrappedKey} in ({$placeholders})";
+
+        $connection->update($sql, $bindings);
     }
 }

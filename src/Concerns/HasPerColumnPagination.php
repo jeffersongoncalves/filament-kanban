@@ -14,7 +14,7 @@ trait HasPerColumnPagination
 
     protected function perPage(): int
     {
-        return $this->perPage ?? 50;
+        return $this->perPage;
     }
 
     protected function pageFor(int|string $statusId): int
