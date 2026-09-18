@@ -1,8 +1,13 @@
 <x-filament-panels::page>
     {{--
-        ADR-0001, decision 4: the drag library is (re)bound on every
-        Livewire morph, not just once on page load — that's what keeps
-        drag working after the first move instead of silently dying.
+        ADR-0001, decision 4: the drag library is (re)bound after every
+        Livewire commit for this component, not just once on page load —
+        that's what keeps drag working after the first move instead of
+        silently dying. Bound via the `commit` hook's succeed() callback
+        (fires once per request, after the DOM is patched), not
+        `morph.updated` (fires once per morphed *element*, which would
+        destroy/recreate every column's Sortable instance N times per
+        drag for no reason).
     --}}
     <div
         x-data
@@ -36,7 +41,12 @@
             }
 
             bindColumns()
-            Livewire.hook('morph.updated', ({ el }) => { if ($el.contains(el)) bindColumns() })
+
+            const componentId = $wire.$id
+            Livewire.hook('commit', ({ component, succeed }) => {
+                if (component.id !== componentId) return
+                succeed(() => bindColumns())
+            })
         "
         x-on:kanban-move-rejected.window="
             $el.querySelector(`[data-record-id='${$event.detail.recordId}']`)
