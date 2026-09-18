@@ -6,6 +6,12 @@
 
 # Filament Kanban
 
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/jeffersongoncalves/filament-kanban.svg?style=flat-square)](https://packagist.org/packages/jeffersongoncalves/filament-kanban)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/jeffersongoncalves/filament-kanban/tests.yml?branch=3.x&label=tests&style=flat-square)](https://github.com/jeffersongoncalves/filament-kanban/actions?query=workflow%3ATests+branch%3A3.x)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/jeffersongoncalves/filament-kanban/fix-php-code-style-issues.yml?branch=3.x&label=code%20style&style=flat-square)](https://github.com/jeffersongoncalves/filament-kanban/actions?query=workflow%3A%22Fix+PHP+code+style+issues%22+branch%3A3.x)
+[![Total Downloads](https://img.shields.io/packagist/dt/jeffersongoncalves/filament-kanban.svg?style=flat-square)](https://packagist.org/packages/jeffersongoncalves/filament-kanban)
+[![License](https://img.shields.io/packagist/l/jeffersongoncalves/filament-kanban.svg?style=flat-square)](LICENSE.md)
+
 Add a drag-and-drop kanban board to a Filament panel, backed by your own Eloquent model — bounded per-column queries, batched reorder writes, and server-side status-transition validation by design (see [ADR-0001](docs/adr/0001-board-rendering-performance.md)).
 
 ## Requirements
@@ -23,6 +29,8 @@ Add a drag-and-drop kanban board to a Filament panel, backed by your own Eloquen
 | [3.x](https://github.com/jeffersongoncalves/filament-kanban/tree/3.x) | 5.x |
 
 ## Installation
+
+You can install the package via composer:
 
 ```bash
 composer require jeffersongoncalves/filament-kanban:"^3.0"
@@ -136,3 +144,24 @@ composer test
 composer analyse
 composer format
 ```
+
+## Changelog
+
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+
+## Contributing
+
+Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
+
+## Security Vulnerabilities
+
+Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+
+## Credits
+
+- [Jefferson Gonçalves](https://github.com/jeffersongoncalves)
+- [All Contributors](../../contributors)
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
