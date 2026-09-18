@@ -1,0 +1,16 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    paths:
+        - src
+
+    level: 5
+
+    ignoreErrors:
+        -
+            # static::$model is a host-supplied class name; whether it has a
+            # scopeOrdered() local scope is genuinely unknowable until
+            # runtime, which is exactly what the method_exists() guard is for.
+            message: '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::ordered\(\)#'
+            path: src/Concerns/HasPerColumnPagination.php
