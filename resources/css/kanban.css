@@ -1,3 +1,94 @@
+/*
+ * Structural layout only — deliberately plain CSS, not Tailwind utility
+ * classes. The blade views used to rely on the host app's Tailwind build
+ * scanning this package's vendor path to keep classes like `flex`/`gap-4`/
+ * `bg-gray-200` out of the production purge. Most host apps never add a
+ * vendor package's views to their `content`/`@source` config, so the board
+ * shipped completely unstyled in production (#98). This stylesheet is
+ * registered via FilamentAsset and always loads, regardless of the host's
+ * Tailwind config.
+ */
+
+.fi-kanban-board {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .fi-kanban-board {
+        flex-direction: row;
+    }
+}
+
+.fi-kanban-column {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    margin-bottom: 1.25rem;
+}
+
+@media (min-width: 768px) {
+    .fi-kanban-column {
+        width: 24rem;
+        min-height: 100%;
+    }
+}
+
+.fi-kanban-column-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.25rem 0.5rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.dark .fi-kanban-column-header {
+    color: #e5e7eb;
+}
+
+.fi-kanban-column-body {
+    display: flex;
+    flex: 1 1 0%;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background-color: #e5e7eb;
+    border-radius: 0.75rem;
+}
+
+.dark .fi-kanban-column-body {
+    background-color: #1f2937;
+}
+
+.fi-kanban-load-more {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: rgb(var(--primary-600, 79 70 229));
+}
+
+.fi-kanban-load-more:hover {
+    text-decoration: underline;
+}
+
+.fi-kanban-record {
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    color: #4b5563;
+    cursor: grab;
+    background-color: #fff;
+    border-radius: 0.5rem;
+}
+
+.dark .fi-kanban-record {
+    color: #e5e7eb;
+    background-color: #374151;
+}
+
 body.grabbing,
 body.grabbing * {
     cursor: grabbing !important;
