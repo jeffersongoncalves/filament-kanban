@@ -12,7 +12,7 @@
     <div
         x-data
         wire:ignore.self
-        class="md:flex overflow-x-auto overflow-y-hidden gap-4 pb-4"
+        class="fi-kanban-board"
         x-init="
             const bindColumns = () => {
                 $el.querySelectorAll('[data-status-id]').forEach((column) => {

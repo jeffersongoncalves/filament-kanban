@@ -30,6 +30,10 @@ You can install the package via composer:
 composer require jeffersongoncalves/filament-kanban:"^2.0"
 ```
 
+No Tailwind config changes needed — the board's layout ships as a plain stylesheet
+registered via `FilamentAsset`, not Tailwind utility classes, so it renders correctly
+even though your app's Tailwind build never scans this package's vendor views.
+
 ## Usage
 
 This package ships a base `Pages\KanbanBoard` class. You extend it for whatever
